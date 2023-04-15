@@ -7,42 +7,58 @@ plugins {
 	kotlin("plugin.spring") version "1.7.22"
 }
 
-group = "io.spring"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+allprojects {
+	apply(plugin = "org.jetbrains.kotlin.jvm")
+	apply(plugin = "org.jetbrains.kotlin.plugin.spring")
 
-repositories {
-	mavenCentral()
-}
 
-extra["testcontainersVersion"] = "1.17.6"
+	group = "io.spring"
+	version = "0.1.0-SNAPSHOT"
 
-dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-redis")
-	implementation("org.springframework.boot:spring-boot-starter-jooq")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.flywaydb:flyway-core")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	runtimeOnly("org.postgresql:postgresql")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.testcontainers:junit-jupiter")
-	testImplementation("org.testcontainers:postgresql")
-}
+	java {
+		sourceCompatibility = JavaVersion.VERSION_17
+		targetCompatibility = JavaVersion.VERSION_17
+	}
 
-dependencyManagement {
-	imports {
-		mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	tasks.withType<KotlinCompile> {
+		kotlinOptions {
+			freeCompilerArgs = listOf("-Xjsr305=strict")
+			jvmTarget = "17"
+		}
+	}
+
+	tasks.withType<Test> {
+		useJUnitPlatform()
 	}
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+
+subprojects {
+	extra["testcontainersVersion"] = "1.17.6"
+	extra["junitVersion"] = "5.9.2"
+
+//	repositories {
+//		mavenLocal()
+//		mavenCentral()
+//	}
+
+	dependencies {
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
+		implementation("org.flywaydb:flyway-core:9.16.3")
+		implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
+
+//	runtimeOnly("org.postgresql:postgresql")
+
+		testImplementation("org.junit.jupiter:junit-jupiter-api:${project.extra["junitVersion"]}")
+		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${project.extra["junitVersion"]}")
+//	testImplementation("org.testcontainers:junit-jupiter")
+//	testImplementation("org.testcontainers:postgresql")
 	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
+
