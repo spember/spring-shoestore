@@ -10,7 +10,7 @@
 ### Domains
 
 * Shoe
-* SKU
+* SKU / Variants
 * Orders
 * Shipments
 
