@@ -7,7 +7,10 @@ class ShoeService(private val repository: ShoeRepository) {
     fun get(id: ShoeId): Shoe? = repository.findById(id)
 
     fun search(query: ShoeLookupQuery): List<Shoe> {
-        return listOf()
+        if (query.isEmpty()) {
+            return repository.list()
+        } else {
+            return listOf()
+        }
     }
-
 }
