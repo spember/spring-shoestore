@@ -6,14 +6,15 @@ import io.spring.shoestore.core.products.Shoe
 import io.spring.shoestore.core.products.ShoeLookupQuery
 import io.spring.shoestore.core.products.ShoeService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ShoeController(private val shoeService: ShoeService) {
 
     @GetMapping("/shoes")
-    fun listShoes(): ShoeResults {
-        val query = ShoeLookupQuery(null, null)
+    fun listShoes(@RequestParam name: String?): ShoeResults {
+        val query = ShoeLookupQuery(name, null)
         return ShoeResults(shoeService.search(query).map { convert(it) })
     }
 

@@ -1,4 +1,4 @@
-package io.spring.shoestore.postgres
+package io.spring.shoestore.postgres.mappers
 
 import io.spring.shoestore.core.products.Currency
 import io.spring.shoestore.core.products.Shoe

@@ -10,7 +10,9 @@ class ShoeService(private val repository: ShoeRepository) {
         if (query.isEmpty()) {
             return repository.list()
         } else {
-            return listOf()
+            val nameResults = repository.findByName(query.byName?: "")
+            // todo: price
+            return nameResults
         }
     }
 }
