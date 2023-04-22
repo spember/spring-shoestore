@@ -7,7 +7,9 @@ import io.spring.shoestore.core.products.ShoeId
  * For example a 'Small, Blue' Shirt. "Green, size 11" Sneaker.
  */
 class ProductVariant(val sku: Sku, val shoeId: ShoeId, val label: String, val size: VariantSize, val color: VariantColor) {
-
+    override fun toString(): String {
+        return "Variant: '$label' ($sku) $size, $color"
+    }
 }
 
 data class Sku(val value: String) {

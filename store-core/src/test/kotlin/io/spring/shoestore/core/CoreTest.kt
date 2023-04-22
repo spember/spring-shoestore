@@ -14,4 +14,10 @@ class CoreTest {
         assertEquals(ShoeId(common), ShoeId(common))
         assertNotEquals(ShoeId(common), ShoeId(UUID.randomUUID()))
     }
+
+    @Test
+    fun `creating shoeIds from raw Values`() {
+        val base = UUID.randomUUID()
+        assertEquals(ShoeId(base), ShoeId.from(base.toString()))
+    }
 }

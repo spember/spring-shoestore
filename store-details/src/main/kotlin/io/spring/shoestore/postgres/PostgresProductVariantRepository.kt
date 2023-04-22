@@ -18,7 +18,7 @@ class PostgresProductVariantRepository(private val jdbcTemplate: JdbcTemplate): 
     }
 
     override fun registerNewVariants(variants: List<ProductVariant>) {
-        jdbcTemplate.batchUpdate("insert into variants (sku, shoe_id, label, size, color) values (?, ?, ?, ?, ?); ", object: BatchPreparedStatementSetter {
+        jdbcTemplate.batchUpdate("insert into variants (sku, shoe_id, label, size, color) values (?, ?, ?, ?, ?) on conflict do nothing; ", object: BatchPreparedStatementSetter {
             override fun setValues(ps: PreparedStatement, i: Int) {
                 val variant = variants[i]
                 ps.setString(1, variant.sku.value)

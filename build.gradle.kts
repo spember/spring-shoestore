@@ -41,6 +41,7 @@ allprojects {
 subprojects {
 	extra["testcontainersVersion"] = "1.17.6"
 	extra["junitVersion"] = "5.9.2"
+	extra["jedisVersion"] = "4.3.2"
 
 //	repositories {
 //		mavenLocal()

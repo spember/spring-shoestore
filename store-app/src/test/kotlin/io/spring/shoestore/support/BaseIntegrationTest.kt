@@ -8,7 +8,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.containers.wait.strategy.WaitStrategy
+import org.testcontainers.utility.DockerImageName
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BaseIntegrationTest {
@@ -27,12 +30,20 @@ class BaseIntegrationTest {
             .withUsername("stavvy")
             .withPassword("stavvy")
 
+        @JvmStatic
+        val redisContainer: GenericContainer<*> = GenericContainer(DockerImageName.parse("redis:7.0.11-alpine"))
+            .withExposedPorts(6379)
+
+
 
         @JvmStatic
         @BeforeAll
         internal fun setUp() {
             if (!postgresContainer.isRunning) {
                 postgresContainer.start()
+            }
+            if (!redisContainer.isRunning) {
+                redisContainer.start()
             }
 //            if (!localStackContainer.isRunning) {
 //                localStackContainer.start()
@@ -54,6 +65,9 @@ class BaseIntegrationTest {
 //            registry.add("cloud.aws.end-point.uri",
 //                { localStackContainer.getEndpointOverride(LocalStackContainer.Service.SNS)}
 //            )
+            println("Configuring Redis: ${redisContainer.getHost()}, ${redisContainer.getMappedPort(6379).toString()}")
+            registry.add("spring.redis.host", redisContainer::getHost)
+            registry.add("spring.redis.port", { redisContainer.getMappedPort(6379).toString()} )
         }
 
     }
