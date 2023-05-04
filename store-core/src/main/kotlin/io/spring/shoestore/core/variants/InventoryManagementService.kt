@@ -26,6 +26,11 @@ class InventoryManagementService(
         inventoryWarehousingRepository.replaceItem(variant.sku, item)
     }
 
+    fun retrieveVariantsAndCount(sku: Sku): Pair<ProductVariant, Long>? {
+        val productVariant = productVariantRepository.findById(sku) ?: return null
+        return productVariant to inventoryWarehousingRepository.checkInventoryCount(sku)
+    }
+
     companion object {
         private val log = LoggerFactory.getLogger(InventoryManagementService::class.java)
     }

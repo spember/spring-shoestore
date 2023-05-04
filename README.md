@@ -16,7 +16,7 @@
 
 ### Use Cases
 
-* Add new Inventory from Shipment (store inventory as lists in redis)
+* Add new Inventory from Shipment (store inventory as sets in redis)
 * Customer Places Order ()
 * List SKUs
 

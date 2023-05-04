@@ -3,6 +3,7 @@ package io.spring.shoestore.postgres
 import io.spring.shoestore.core.products.ShoeId
 import io.spring.shoestore.core.variants.ProductVariant
 import io.spring.shoestore.core.variants.ProductVariantRepository
+import io.spring.shoestore.core.variants.Sku
 import io.spring.shoestore.postgres.mappers.ProductVariantMapper
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
@@ -15,6 +16,10 @@ class PostgresProductVariantRepository(private val jdbcTemplate: JdbcTemplate): 
             PV_MAPPER,
             shoeId.value
         )
+    }
+
+    override fun findById(sku: Sku): ProductVariant? {
+        return jdbcTemplate.queryForObject("select * from variants where sku = ? limit 1;", PV_MAPPER, sku.value)
     }
 
     override fun registerNewVariants(variants: List<ProductVariant>) {

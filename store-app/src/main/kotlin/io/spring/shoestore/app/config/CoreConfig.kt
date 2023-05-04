@@ -21,6 +21,8 @@ class CoreConfig {
     fun getShoeService(jdbcTemplate: JdbcTemplate): ShoeService {
         // an example of 'hiding' the details implementation, only the shoeservice can be grabbed via DI
         return ShoeService(PostgresShoeRepository(jdbcTemplate))
+        // todo: swap in
+//        return ShoeService(RedisShoeRepository(jedis))
     }
 
     @Bean

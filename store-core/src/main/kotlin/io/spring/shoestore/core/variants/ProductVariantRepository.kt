@@ -9,5 +9,7 @@ interface ProductVariantRepository  {
 
     fun findAllVariantsForShoe(shoeId: ShoeId): List<ProductVariant>
 
+    fun findById(sku: Sku): ProductVariant?
+
     fun registerNewVariants(variants: List<ProductVariant>)
 }
