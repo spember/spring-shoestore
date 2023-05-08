@@ -1,15 +1,17 @@
 package io.spring.shoestore.app.config
 
-import io.spring.shoestore.core.products.ShoeRepository
+
 import io.spring.shoestore.core.products.ShoeService
+import io.spring.shoestore.core.security.PrincipalUser
+import io.spring.shoestore.core.security.StoreAuthProvider
 import io.spring.shoestore.core.variants.InventoryManagementService
 import io.spring.shoestore.core.variants.ProductVariantService
 import io.spring.shoestore.postgres.PostgresProductVariantRepository
 import io.spring.shoestore.postgres.PostgresShoeRepository
 import io.spring.shoestore.redis.RedisInventoryWarehousingRepository
+import io.spring.shoestore.security.FakeStoreAuthProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.jdbc.core.JdbcTemplate
 import redis.clients.jedis.Jedis
@@ -36,5 +38,13 @@ class CoreConfig {
             PostgresProductVariantRepository(jdbcTemplate),
             RedisInventoryWarehousingRepository(jedis)
         )
+    }
+
+
+    @Bean
+    fun getStoreAuthProvider(): StoreAuthProvider {
+        val provider = FakeStoreAuthProvider()
+        provider.login(PrincipalUser("Sam Testington", "stestington@test.com"))
+        return provider
     }
 }

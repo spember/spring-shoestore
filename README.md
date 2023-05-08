@@ -20,6 +20,14 @@
 * Customer Places Order ()
 * List SKUs
 
+### Punch List
+
+* Add Orders
+* Explore security?
+* Swap Orders for Postgres to Dynamo
+* update documentation
+* create walkthrough for when on stage
+
 ### If time
 * Add SQS and SES if time
     
