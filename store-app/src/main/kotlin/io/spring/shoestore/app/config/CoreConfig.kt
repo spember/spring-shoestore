@@ -1,11 +1,14 @@
 package io.spring.shoestore.app.config
 
 
+import io.spring.shoestore.core.orders.OrderProcessingService
+import io.spring.shoestore.core.orders.OrderRepository
 import io.spring.shoestore.core.products.ShoeService
 import io.spring.shoestore.core.security.PrincipalUser
 import io.spring.shoestore.core.security.StoreAuthProvider
 import io.spring.shoestore.core.variants.InventoryManagementService
 import io.spring.shoestore.core.variants.ProductVariantService
+import io.spring.shoestore.postgres.PostgresOrderRepository
 import io.spring.shoestore.postgres.PostgresProductVariantRepository
 import io.spring.shoestore.postgres.PostgresShoeRepository
 import io.spring.shoestore.redis.RedisInventoryWarehousingRepository
@@ -40,6 +43,17 @@ class CoreConfig {
         )
     }
 
+    @Bean
+    fun getOrderRepository(jdbcTemplate: JdbcTemplate): OrderRepository {
+        return PostgresOrderRepository(jdbcTemplate)
+    }
+
+    @Bean
+    fun getOrderProcessingService(
+        inventoryManagementService: InventoryManagementService,
+        shoeService: ShoeService,
+        orderRepository: OrderRepository
+    ) = OrderProcessingService(inventoryManagementService, shoeService, orderRepository)
 
     @Bean
     fun getStoreAuthProvider(): StoreAuthProvider {

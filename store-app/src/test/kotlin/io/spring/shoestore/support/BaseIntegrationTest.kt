@@ -1,5 +1,7 @@
 package io.spring.shoestore.support
 
+import io.spring.shoestore.app.http.api.ShoeData
+import io.spring.shoestore.app.http.api.ShoeResults
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +23,11 @@ class BaseIntegrationTest {
 
     @Autowired
     lateinit var restTemplate: TestRestTemplate
+
+    protected fun getShoeByName(namePart: String): ShoeData {
+        val results = restTemplate.getForObject("http://localhost:${serverPort}/shoes?name=${namePart}", ShoeResults::class.java)
+        return results.shoes.first()
+    }
 
     companion object {
 

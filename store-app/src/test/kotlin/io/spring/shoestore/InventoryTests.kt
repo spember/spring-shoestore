@@ -118,9 +118,4 @@ class InventoryTests: BaseIntegrationTest() {
         inventoryManagementService.restockItem(variant, item!!)
         assertEquals(1, inventoryManagementService.getInventoryCount(variant))
     }
-
-    private fun getShoeByName(namePart: String): ShoeData {
-        val results = restTemplate.getForObject("http://localhost:${serverPort}/shoes?name=${namePart}", ShoeResults::class.java)
-        return results.shoes.first()
-    }
 }

@@ -18,8 +18,10 @@ class InventoryManagementService(
         return inventoryWarehousingRepository.checkInventoryCount(variant.sku)
     }
 
-    fun holdForOrder(variant: ProductVariant): InventoryItem? {
-        return inventoryWarehousingRepository.reserveItem(variant.sku)
+    fun holdForOrder(variant: ProductVariant): InventoryItem? = holdForOrder(variant.sku)
+
+    fun holdForOrder(sku: Sku): InventoryItem? {
+        return inventoryWarehousingRepository.reserveItem(sku)
     }
 
     fun restockItem(variant: ProductVariant, item: InventoryItem) {
