@@ -2,6 +2,7 @@ package io.spring.shoestore.app.config
 
 
 import io.spring.shoestore.core.orders.OrderProcessingService
+import io.spring.shoestore.core.orders.OrderQueryService
 import io.spring.shoestore.core.orders.OrderRepository
 import io.spring.shoestore.core.products.ShoeService
 import io.spring.shoestore.core.security.PrincipalUser
@@ -54,6 +55,9 @@ class CoreConfig {
         shoeService: ShoeService,
         orderRepository: OrderRepository
     ) = OrderProcessingService(inventoryManagementService, shoeService, orderRepository)
+
+    @Bean
+    fun getOrderQueryService(orderRepository: OrderRepository): OrderQueryService = OrderQueryService(orderRepository)
 
     @Bean
     fun getStoreAuthProvider(): StoreAuthProvider {

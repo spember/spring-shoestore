@@ -1,7 +1,7 @@
 package io.spring.shoestore
 
 import io.spring.shoestore.app.http.api.OrderRequest
-import io.spring.shoestore.app.http.api.OrderResponse
+import io.spring.shoestore.app.http.api.OrderAPIResponse
 import io.spring.shoestore.core.products.ShoeId
 import io.spring.shoestore.core.variants.InventoryItem
 import io.spring.shoestore.core.variants.InventoryManagementService
@@ -46,12 +46,15 @@ class OrderTests: BaseIntegrationTest() {
         val results = restTemplate.postForEntity(
             "http://localhost:${serverPort}/orders",
             OrderRequest(mapOf("OT-001" to 1)),
-            OrderResponse::class.java
+            OrderAPIResponse::class.java
         )
 
         assertNotNull(results)
         assertEquals(HttpStatus.OK, results.statusCode)
         assertTrue(results.body!!.result)
         assertNotNull(results.body!!.orderNumber)
+
+        val orders = restTemplate.getForEntity("http://localhost:${serverPort}/orders", String::class.java)
+        assertEquals(HttpStatus.OK, orders.statusCode)
     }
 }

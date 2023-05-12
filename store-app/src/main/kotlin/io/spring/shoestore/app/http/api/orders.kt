@@ -4,5 +4,5 @@ import java.time.Instant
 
 data class OrderRequest(val items: Map<String, Int>)
 
-data class OrderResponse(val result: Boolean, val orderNumber: String, val date: Instant)
+data class OrderAPIResponse(val result: Boolean, val orderNumber: String, val date: Instant)
 

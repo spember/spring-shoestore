@@ -6,5 +6,5 @@ interface OrderRepository {
 
     fun submitOrder(order: Order)
 
-    fun listOrdersForUser(user: PrincipalUser)
+    fun listOrdersForUser(user: PrincipalUser): List<Order>
 }
