@@ -2,6 +2,8 @@ package io.spring.shoestore.app.http
 
 import io.spring.shoestore.app.http.api.OrderRequest
 import io.spring.shoestore.app.http.api.OrderAPIResponse
+import io.spring.shoestore.app.http.api.PreviousCustomerOrdersResponse
+import io.spring.shoestore.app.http.api.PreviousOrder
 import io.spring.shoestore.core.orders.OrderFailure
 import io.spring.shoestore.core.orders.OrderProcessingService
 import io.spring.shoestore.core.orders.OrderQueryService
@@ -51,12 +53,17 @@ class OrderController(
     }
 
     @GetMapping("/orders")
-    fun listOrdersForUser(): ResponseEntity<String> {
+    fun listOrdersForUser(): ResponseEntity<PreviousCustomerOrdersResponse> {
         log.info("Fetching orders for user ${storeAuthProvider.getCurrentUser()}")
-        orderQueryService.retrieveOrdersForUser(storeAuthProvider.getCurrentUser()).forEach {
-            log.info(it.toString())
-        }
-        return ResponseEntity<String>("Foo", HttpStatus.OK)
+        val foundOrders = orderQueryService.retrieveOrdersForUser(storeAuthProvider.getCurrentUser())
+
+        return ResponseEntity<PreviousCustomerOrdersResponse>(
+            PreviousCustomerOrdersResponse(foundOrders.map {order ->
+                PreviousOrder(order.id.toString(), order.time.toString(), order.price,
+                    order.getItems().associate { it.sku.toString() to it.inventoryItems.size }
+                )
+            }),
+            HttpStatus.OK)
     }
 
     companion object {
