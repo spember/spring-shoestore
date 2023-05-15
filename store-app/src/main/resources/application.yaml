@@ -17,3 +17,5 @@ cloud:
     credentials:
       access-key: USERORGEXAMPLE
       secret-key: 2QvM4/Tdmf38SkcD/qalvXO4EXAMPLEKEY
+    end-point:
+      uri: "http://www.foo.com"

@@ -16,10 +16,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("redis.clients:jedis:${project.extra["jedisVersion"]}")
+    implementation(platform("software.amazon.awssdk:bom:2.20.26"))
+    implementation("software.amazon.awssdk:dynamodb")
+
     runtimeOnly("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:localstack")
+
+    testImplementation ("com.amazonaws:aws-java-sdk-s3:1.11.914")
+//    testImplementation(package("libs.testcontainers.aws.java.core"))
 
 }

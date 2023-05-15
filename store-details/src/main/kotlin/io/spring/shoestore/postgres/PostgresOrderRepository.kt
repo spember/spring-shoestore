@@ -66,6 +66,11 @@ class PostgresOrderRepository(private val jdbcTemplate: JdbcTemplate): OrderRepo
         return orders
     }
 
+    override fun removeAllOrders() {
+        jdbcTemplate.update("delete from order_line_items;")
+        jdbcTemplate.update("delete from orders;")
+    }
+
     companion object {
         private val log = LoggerFactory.getLogger(PostgresOrderRepository::class.java)
     }

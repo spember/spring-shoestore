@@ -1,6 +1,7 @@
 package io.spring.shoestore.app.config
 
 
+import io.spring.shoestore.core.orders.OrderAdminService
 import io.spring.shoestore.core.orders.OrderProcessingService
 import io.spring.shoestore.core.orders.OrderQueryService
 import io.spring.shoestore.core.orders.OrderRepository
@@ -55,6 +56,9 @@ class CoreConfig {
         shoeService: ShoeService,
         orderRepository: OrderRepository
     ) = OrderProcessingService(inventoryManagementService, shoeService, orderRepository)
+
+    @Bean
+    fun getOrderAdminService(orderRepository: OrderRepository) = OrderAdminService(orderRepository)
 
     @Bean
     fun getOrderQueryService(orderRepository: OrderRepository): OrderQueryService = OrderQueryService(orderRepository)

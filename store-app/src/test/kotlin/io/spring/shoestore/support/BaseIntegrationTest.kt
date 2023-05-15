@@ -12,6 +12,8 @@ import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.containers.localstack.LocalStackContainer
+import org.testcontainers.containers.localstack.LocalStackContainer.Service.DYNAMODB
 import org.testcontainers.containers.wait.strategy.WaitStrategy
 import org.testcontainers.utility.DockerImageName
 
@@ -41,6 +43,10 @@ class BaseIntegrationTest {
         val redisContainer: GenericContainer<*> = GenericContainer(DockerImageName.parse("redis:7.0.11-alpine"))
             .withExposedPorts(6379)
 
+        @JvmStatic
+        val localStackContainer: LocalStackContainer = LocalStackContainer(DockerImageName.parse("localstack/localstack:1.3.1"))
+            .withServices(DYNAMODB)
+
 
 
         @JvmStatic
@@ -52,9 +58,9 @@ class BaseIntegrationTest {
             if (!redisContainer.isRunning) {
                 redisContainer.start()
             }
-//            if (!localStackContainer.isRunning) {
-//                localStackContainer.start()
-//            }
+            if (!localStackContainer.isRunning) {
+                localStackContainer.start()
+            }
         }
 
         @JvmStatic
@@ -69,9 +75,9 @@ class BaseIntegrationTest {
             registry.add("spring.datasource.url", postgresContainer::getJdbcUrl)
             registry.add("spring.datasource.username", postgresContainer::getUsername)
             registry.add("spring.datasource.password", postgresContainer::getPassword)
-//            registry.add("cloud.aws.end-point.uri",
-//                { localStackContainer.getEndpointOverride(LocalStackContainer.Service.SNS)}
-//            )
+            registry.add("cloud.aws.end-point.uri",
+                { localStackContainer.getEndpointOverride(LocalStackContainer.Service.DYNAMODB)}
+            )
             println("Configuring Redis: ${redisContainer.getHost()}, ${redisContainer.getMappedPort(6379).toString()}")
             registry.add("spring.redis.host", redisContainer::getHost)
             registry.add("spring.redis.port", { redisContainer.getMappedPort(6379).toString()} )

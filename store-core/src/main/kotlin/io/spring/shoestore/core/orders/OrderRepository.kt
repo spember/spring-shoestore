@@ -7,4 +7,6 @@ interface OrderRepository {
     fun submitOrder(order: Order)
 
     fun listOrdersForUser(user: PrincipalUser): List<Order>
+
+    fun removeAllOrders()
 }
