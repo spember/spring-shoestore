@@ -9,8 +9,17 @@ internal object OrderTableDetails {
 
     const val NAME = "Orders"
 
-    private const val PRIMARY_KEY = "UserId"
-    private const val RANGE_KEY = "OrderAndPosition"
+    const val PRIMARY_KEY = "UserId"
+    const val RANGE_KEY = "OrderAndPosition"
+
+    const val DUPE_ORDER_ID = "BackupOrderId"
+    const val TIME = "Time"
+    const val PRICE = "Price"
+
+    const val SKU = "Sku"
+    const val PRICE_PER = "PricePer"
+    const val SERIALS = "Serials"
+
 
     val attributes: List<AttributeDefinition> = listOf(
         AttributeDefinition.builder()

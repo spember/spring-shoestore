@@ -1,6 +1,7 @@
 package io.spring.shoestore.app.config
 
 
+import io.spring.shoestore.aws.dynamodb.DynamoDbOrderRepository
 import io.spring.shoestore.core.orders.OrderAdminService
 import io.spring.shoestore.core.orders.OrderProcessingService
 import io.spring.shoestore.core.orders.OrderQueryService
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.jdbc.core.JdbcTemplate
 import redis.clients.jedis.Jedis
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient
 
 @Configuration
 class CoreConfig {
@@ -46,8 +48,9 @@ class CoreConfig {
     }
 
     @Bean
-    fun getOrderRepository(jdbcTemplate: JdbcTemplate): OrderRepository {
+    fun getOrderRepository(jdbcTemplate: JdbcTemplate, dynamoDbClient: DynamoDbClient): OrderRepository {
         return PostgresOrderRepository(jdbcTemplate)
+//        return DynamoDbOrderRepository(dynamoDbClient)
     }
 
     @Bean

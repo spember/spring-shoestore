@@ -9,12 +9,8 @@ import software.amazon.awssdk.services.dynamodb.model.CreateTableResponse
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
-import software.amazon.awssdk.services.dynamodb.model.KeySchemaElement
-import software.amazon.awssdk.services.dynamodb.model.KeyType
 import software.amazon.awssdk.services.dynamodb.model.ProvisionedThroughput
-import software.amazon.awssdk.services.dynamodb.model.ScalarAttributeType
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter
-import kotlin.system.exitProcess
 
 /**
  * A little layer to help us configure our Dynamo Table(s)
@@ -64,8 +60,6 @@ class DynamoTableManager(private val dynamoDbClient: DynamoDbClient) {
         } catch (e: DynamoDbException) {
             log.error("Could not establish table: ${e}")
         }
-
-
     }
 
     companion object {
