@@ -50,7 +50,6 @@ class CoreConfig {
     @Bean
     fun getOrderRepository(jdbcTemplate: JdbcTemplate, dynamoDbClient: DynamoDbClient): OrderRepository {
         return PostgresOrderRepository(jdbcTemplate)
-//        return DynamoDbOrderRepository(dynamoDbClient)
     }
 
     @Bean
