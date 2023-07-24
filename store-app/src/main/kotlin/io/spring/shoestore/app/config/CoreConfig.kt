@@ -18,7 +18,6 @@ import io.spring.shoestore.redis.RedisInventoryWarehousingRepository
 import io.spring.shoestore.security.FakeStoreAuthProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.jdbc.core.JdbcTemplate
 import redis.clients.jedis.Jedis
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
@@ -30,26 +29,25 @@ class CoreConfig {
     fun getShoeService(jdbcTemplate: JdbcTemplate): ShoeService {
         // an example of 'hiding' the details implementation, only the shoeservice can be grabbed via DI
         return ShoeService(PostgresShoeRepository(jdbcTemplate))
-        // todo: swap in
-//        return ShoeService(RedisShoeRepository(jedis))
     }
 
     @Bean
-    fun getProductVariantService(jdbcTemplate: JdbcTemplate, redisTemplate: RedisTemplate<String, Any>, jedis: Jedis): ProductVariantService {
+    fun getProductVariantService(jdbcTemplate: JdbcTemplate, jedis: Jedis): ProductVariantService {
         return ProductVariantService(PostgresProductVariantRepository(jdbcTemplate))
     }
 
+
     @Bean
-    fun getInventoryManagementService(jdbcTemplate: JdbcTemplate, jedis: Jedis): InventoryManagementService {
-        return InventoryManagementService(
+    // Kotlin-ified!
+    fun getInventoryManagementService(jdbcTemplate: JdbcTemplate, jedis: Jedis) = InventoryManagementService(
             PostgresProductVariantRepository(jdbcTemplate),
             RedisInventoryWarehousingRepository(jedis)
         )
-    }
 
     @Bean
     fun getOrderRepository(jdbcTemplate: JdbcTemplate, dynamoDbClient: DynamoDbClient): OrderRepository {
         return PostgresOrderRepository(jdbcTemplate)
+//        return DynamoDbOrderRepository(dynamoDbClient)
     }
 
     @Bean

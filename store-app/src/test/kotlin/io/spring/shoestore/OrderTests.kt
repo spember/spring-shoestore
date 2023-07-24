@@ -46,7 +46,7 @@ class OrderTests: BaseIntegrationTest() {
     private fun greenVariant(shoeId: String) = ProductVariant(
         Sku("OT-456"),
         ShoeId.from(shoeId),
-        "Green Sneaker: Medium", // I have no idea, just random text really
+        "Green Sneaker: Medium",
         VariantSize.US_10,
         VariantColor.GREEN
     )

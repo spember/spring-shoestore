@@ -3,7 +3,6 @@ package io.spring.shoestore.aws.dynamodb
 import org.slf4j.LoggerFactory
 import software.amazon.awssdk.core.waiters.WaiterResponse
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
-import software.amazon.awssdk.services.dynamodb.model.AttributeDefinition
 import software.amazon.awssdk.services.dynamodb.model.CreateTableRequest
 import software.amazon.awssdk.services.dynamodb.model.CreateTableResponse
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableRequest

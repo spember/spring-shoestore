@@ -1,7 +1,7 @@
 package io.spring.shoestore.app.http
 
-import io.spring.shoestore.app.http.api.OrderRequest
 import io.spring.shoestore.app.http.api.OrderAPIResponse
+import io.spring.shoestore.app.http.api.OrderRequest
 import io.spring.shoestore.app.http.api.PreviousCustomerOrdersResponse
 import io.spring.shoestore.app.http.api.PreviousOrder
 import io.spring.shoestore.core.orders.OrderFailure

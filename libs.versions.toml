@@ -1,0 +1,9 @@
+[versions]
+jupiter = "5.9.2"
+
+[libraries]
+jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
+jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+jedis = {module="redis.clients:jedis", version="4.3.2"}
+
+[plugins]

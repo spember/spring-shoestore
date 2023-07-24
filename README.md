@@ -1,4 +1,4 @@
-# Spring Shoe Store
+# Welcome to the Spring Shoe Store!
 
 > A demonstration app built for Spring I/O 2023 to present Clean Architecture principles in Spring
 

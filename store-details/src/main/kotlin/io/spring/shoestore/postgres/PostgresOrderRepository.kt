@@ -9,8 +9,6 @@ import io.spring.shoestore.postgres.mappers.OrderMapper
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
-import org.springframework.jdbc.core.namedparam.SqlParameterSource
 import java.sql.PreparedStatement
 import java.sql.Timestamp
 

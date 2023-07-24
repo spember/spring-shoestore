@@ -37,28 +37,20 @@ allprojects {
 	}
 }
 
-
 subprojects {
 	extra["testcontainersVersion"] = "1.17.6"
 	extra["junitVersion"] = "5.9.2"
-	extra["jedisVersion"] = "4.3.2"
 
-//	repositories {
-//		mavenLocal()
-//		mavenCentral()
-//	}
+
 
 	dependencies {
 		implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
 		implementation("org.flywaydb:flyway-core:9.16.3")
 		implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
 
-//	runtimeOnly("org.postgresql:postgresql")
-
 		testImplementation("org.junit.jupiter:junit-jupiter-api:${project.extra["junitVersion"]}")
 		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${project.extra["junitVersion"]}")
-//	testImplementation("org.testcontainers:junit-jupiter")
-//	testImplementation("org.testcontainers:postgresql")
+
 	}
 }
 
